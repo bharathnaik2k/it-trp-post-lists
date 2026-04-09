@@ -39,3 +39,9 @@ This application loosely follows the **MVVM (Model-View-ViewModel)** architectur
 
 
 ## Video Preview
+
+
+https://github.com/user-attachments/assets/7ca1f71f-e828-4ff1-b266-6a3148ce4e15
+
+
+
