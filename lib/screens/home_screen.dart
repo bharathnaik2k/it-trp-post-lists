@@ -14,7 +14,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool _isSearchVisible = false;
   final TextEditingController _searchController = TextEditingController();
 
   @override
@@ -30,19 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text('Post Lists'),
         actions: [
           IconButton(
-            icon: Icon(_isSearchVisible ? Icons.close : Icons.search),
-            onPressed: () {
-              setState(() {
-                _isSearchVisible = !_isSearchVisible;
-                if (!_isSearchVisible) {
-                  _searchController.clear();
-                  context.read<PostProvider>().search('');
-                }
-              });
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.settings),
+            icon: const Icon(Icons.settings),
             onPressed: () {
               Navigator.push(
                 context,
@@ -54,28 +41,22 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Column(
         children: [
-          AnimatedSize(
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-            child: _isSearchVisible
-                ? Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: TextField(
-                      controller: _searchController,
-                      decoration: InputDecoration(
-                        hintText: 'Search posts...',
-                        prefixIcon: const Icon(Icons.search),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(vertical: 0),
-                      ),
-                      onChanged: (value) {
-                        context.read<PostProvider>().search(value);
-                      },
-                    ),
-                  )
-                : const SizedBox.shrink(),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                hintText:  'Search posts here...',
+                prefixIcon: const Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+                contentPadding: const EdgeInsets.symmetric(vertical: 0),
+              ),
+              onChanged: (value) {
+                context.read<PostProvider>().search(value);
+              },
+            ),
           ),
           Expanded(
             child: Consumer<PostProvider>(
@@ -85,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 }
 
                 if (provider.errorMessage != null && provider.posts.isEmpty) {
-                  return Center(child: Text('Error: ${provider.errorMessage}'));
+                  return Center(child: Text('${provider.errorMessage}'));
                 }
 
                 if (provider.posts.isEmpty) {

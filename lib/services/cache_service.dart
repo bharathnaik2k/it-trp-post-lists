@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../models/post.dart';
+import '../models/post_model.dart';
 
 class CacheService {
   static const String key = 'cached_posts';

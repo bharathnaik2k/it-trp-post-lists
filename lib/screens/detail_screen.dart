@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/post.dart';
+import '../models/post_model.dart';
 import '../controllers/post_provider.dart';
 
 class DetailScreen extends StatelessWidget {

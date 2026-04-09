@@ -7,15 +7,17 @@ class ShimmerLoading extends StatefulWidget {
   State<ShimmerLoading> createState() => _ShimmerLoadingState();
 }
 
-class _ShimmerLoadingState extends State<ShimmerLoading> with SingleTickerProviderStateMixin {
+class _ShimmerLoadingState extends State<ShimmerLoading>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 1500))
-      ..repeat();
+      vsync: this,
+      duration: const Duration(milliseconds: 1500),
+    )..repeat();
   }
 
   @override
@@ -27,8 +29,12 @@ class _ShimmerLoadingState extends State<ShimmerLoading> with SingleTickerProvid
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final baseColor = isDark ? Colors.grey[800]! : Colors.grey[300]!;
-    final highlightColor = isDark ? Colors.grey[600]! : Colors.grey[100]!;
+    final baseColor = isDark
+        ? const Color.fromRGBO(66, 66, 66, 1)
+        : const Color.fromRGBO(224, 224, 224, 1);
+    final highlightColor = isDark
+        ? const Color.fromRGBO(117, 117, 117, 1)
+        : const Color.fromRGBO(245, 245, 245, 1);
 
     return AnimatedBuilder(
       animation: _controller,
@@ -43,7 +49,7 @@ class _ShimmerLoadingState extends State<ShimmerLoading> with SingleTickerProvid
               end: const Alignment(1.0, 0.3),
               transform: _SlidingGradientTransform(_controller.value),
             ).createShader(bounds);
-          }, 
+          },
           child: child,
         );
       },
@@ -61,7 +67,11 @@ class _SlidingGradientTransform extends GradientTransform {
 
   @override
   Matrix4? transform(Rect bounds, {TextDirection? textDirection}) {
-    return Matrix4.translationValues(bounds.width * (slidePercent * 2 - 1), 0.0, 0.0);
+    return Matrix4.translationValues(
+      bounds.width * (slidePercent * 2 - 1),
+      0.0,
+      0.0,
+    );
   }
 }
 
@@ -70,16 +80,12 @@ class _ShimmerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            height: 150,
-            color: Colors.white,
-          ),
+          Container(height: 150, color: const Color.fromRGBO(255, 255, 255, 1)),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Row(
@@ -88,17 +94,32 @@ class _ShimmerCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(height: 20, width: double.infinity, color: Colors.white),
+                      Container(
+                        height: 20,
+                        width: double.infinity,
+                        color: const Color.fromRGBO(255, 255, 255, 1),
+                      ),
                       const SizedBox(height: 8),
-                      Container(height: 14, width: 150, color: Colors.white),
+                      Container(
+                        height: 14,
+                        width: 150,
+                        color: const Color.fromRGBO(255, 255, 255, 1),
+                      ),
                     ],
                   ),
                 ),
                 const SizedBox(width: 16),
-                Container(height: 48, width: 48, decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.white)),
+                Container(
+                  height: 48,
+                  width: 48,
+                  decoration: const BoxDecoration(
+                    // shape: BoxShape.circle,
+                    color: Color.fromRGBO(255, 255, 255, 1),
+                  ),
+                ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

@@ -7,9 +7,9 @@ import 'controllers/post_provider.dart';
 import 'controllers/theme_provider.dart';
 import 'screens/home_screen.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  dotenv.load(fileName: '.env');
+  await dotenv.load(fileName: '.env');
   runApp(
     DevicePreview(
       enabled: true,

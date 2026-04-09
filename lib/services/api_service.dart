@@ -4,7 +4,7 @@ import 'dart:developer';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
-import '../models/post.dart';
+import '../models/post_model.dart';
 
 class ApiService {
   final String baseUrl = dotenv.env['BASE_URL']!;

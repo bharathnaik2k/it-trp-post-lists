@@ -4,21 +4,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ThemeProvider with ChangeNotifier {
   static const String themeKey = 'isDarkMode';
   bool _isDarkMode = false;
-
   bool get isDarkMode => _isDarkMode;
 
   ThemeProvider() {
-    _loadFromPrefs();
+    _loadTheme();
   }
 
   void toggleTheme() async {
     _isDarkMode = !_isDarkMode;
-    notifyListeners();
     final prefs = await SharedPreferences.getInstance();
     prefs.setBool(themeKey, _isDarkMode);
+    notifyListeners();
   }
 
-  void _loadFromPrefs() async {
+  void _loadTheme() async {
     final prefs = await SharedPreferences.getInstance();
     _isDarkMode = prefs.getBool(themeKey) ?? false;
     notifyListeners();
@@ -27,33 +26,33 @@ class ThemeProvider with ChangeNotifier {
   ThemeData get themeData {
     return _isDarkMode
         ? ThemeData.dark().copyWith(
-            primaryColor: Colors.deepPurple,
+            primaryColor: const Color.fromARGB(255, 103, 58, 183),
             colorScheme: const ColorScheme.dark(
-              primary: Colors.deepPurpleAccent,
-              secondary: Colors.tealAccent,
+              primary: Color.fromRGBO(124, 77, 255, 1),
+              secondary: Color.fromRGBO(100, 255, 218, 1),
             ),
-            scaffoldBackgroundColor: const Color(0xFF121212),
+            scaffoldBackgroundColor: const Color.fromRGBO(18, 18, 18, 1),
             cardTheme: const CardThemeData(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(16)),
               ),
               elevation: 4,
-              shadowColor: Colors.black45,
+              shadowColor: Color.fromRGBO(0, 0, 0, 1),
             ),
           )
         : ThemeData.light().copyWith(
-            primaryColor: Colors.deepPurple,
+            primaryColor: const Color.fromARGB(255, 103, 58, 183),
             colorScheme: const ColorScheme.light(
-              primary: Colors.deepPurple,
-              secondary: Colors.teal,
+              primary: Color.fromARGB(255, 103, 58, 183),
+              secondary: Color.fromRGBO(0, 150, 136, 1),
             ),
-            scaffoldBackgroundColor: const Color(0xFFF5F5FC),
+            scaffoldBackgroundColor: const Color.fromRGBO(245, 245, 252, 1),
             cardTheme: const CardThemeData(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(16)),
               ),
               elevation: 4,
-              shadowColor: Colors.black12,
+              shadowColor: Color.fromRGBO(0, 0, 0, 0.122),
             ),
           );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../models/post.dart';
+
+import '../models/post_model.dart';
 import '../services/api_service.dart';
 import '../services/cache_service.dart';
 
@@ -8,8 +9,8 @@ class PostProvider with ChangeNotifier {
   final CacheService cacheService;
 
   PostProvider({ApiService? apiService, CacheService? cacheService})
-      : apiService = apiService ?? ApiService(),
-        cacheService = cacheService ?? CacheService() {
+    : apiService = apiService ?? ApiService(),
+      cacheService = cacheService ?? CacheService() {
     fetchPosts();
   }
 
@@ -18,7 +19,6 @@ class PostProvider with ChangeNotifier {
   bool _isLoading = true;
   String? _errorMessage;
   final Set<int> _addedItemIds = {};
-
   List<Post> get posts => _filteredPosts;
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
@@ -35,7 +35,7 @@ class PostProvider with ChangeNotifier {
       try {
         await cacheService.savePosts(_allPosts);
       } catch (cacheError) {
-        debugPrint('Cache save error (safe to ignore if plugin missing): $cacheError');
+        debugPrint(cacheError.toString());
       }
       _filteredPosts = _allPosts;
     } catch (e) {
@@ -44,7 +44,7 @@ class PostProvider with ChangeNotifier {
         if (cached != null && cached.isNotEmpty) {
           _allPosts = cached;
           _filteredPosts = _allPosts;
-          _errorMessage = 'Offline mode. Data from cache.';
+          _errorMessage = 'No data available';
         } else {
           _errorMessage = e.toString();
         }

@@ -1,29 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/post.dart';
+
 import '../controllers/post_provider.dart';
+import '../models/post_model.dart';
 import '../screens/detail_screen.dart';
 
 class PostCard extends StatelessWidget {
   final Post post;
-
   const PostCard({super.key, required this.post});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isAdded = context.select<PostProvider, bool>((provider) => provider.isAdded(post.id));
+    final isAdded = context.select<PostProvider, bool>(
+      (provider) => provider.isAdded(post.id),
+    );
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      color: theme.colorScheme.onPrimary,
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (context) => DetailScreen(post: post),
-            ),
+            MaterialPageRoute(builder: (context) => DetailScreen(post: post)),
           );
         },
         child: Column(
@@ -39,8 +40,12 @@ class PostCard extends StatelessWidget {
                 errorBuilder: (context, error, stackTrace) {
                   return Container(
                     height: 150,
-                    color: Colors.grey.shade300,
-                    child: const Icon(Icons.image_not_supported, size: 50, color: Colors.grey),
+                    color: const Color.fromRGBO(224, 224, 224, 1),
+                    child: const Icon(
+                      Icons.image_not_supported,
+                      size: 50,
+                      color: Color.fromRGBO(158, 158, 158, 1),
+                    ),
                   );
                 },
               ),
@@ -111,7 +116,9 @@ class AnimatedAddRemoveButton extends StatelessWidget {
         width: 48,
         height: 48,
         decoration: BoxDecoration(
-          color: isAdded ? Theme.of(context).colorScheme.error : Theme.of(context).colorScheme.secondary,
+          color: isAdded
+              ? Theme.of(context).colorScheme.error
+              : Theme.of(context).colorScheme.secondary,
           shape: BoxShape.circle,
         ),
         child: AnimatedSwitcher(
@@ -122,7 +129,7 @@ class AnimatedAddRemoveButton extends StatelessWidget {
           child: Icon(
             isAdded ? Icons.remove : Icons.add,
             key: ValueKey<bool>(isAdded),
-            color: Colors.white,
+            color: const Color.fromRGBO(255, 255, 255, 1),
           ),
         ),
       ),
